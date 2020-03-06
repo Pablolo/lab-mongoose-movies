@@ -8,12 +8,14 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-
+const Celebrities  = require('./models/celebrity');
+const seeds        = require('./bin/seeds');
 
 mongoose
-  .connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
+  .connect('mongodb://localhost/celebrities-movies', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+    //return Celebrities.insertMany(seeds);
   })
   .catch(err => {
     console.error('Error connecting to mongo', err)
@@ -50,9 +52,9 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.locals.title = 'Express - Generated with IronGenerator';
 
 
-
 const index = require('./routes/index');
+const celebrities = require('./routes/celebrities');
 app.use('/', index);
-
+app.use('/celebrities', celebrities);
 
 module.exports = app;
