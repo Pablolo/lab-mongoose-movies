@@ -13,4 +13,15 @@ router.get('/', (req, res, next) => {
   console.log('listing celebrities');
 });
 
+/* GET /celebrities/:id */
+router.get('/:id', (req, res, next) => {
+  const { id } = req.params;
+  Celebrity.findById(id)
+  .then(celebrities => {
+    res.render('eachcelebrity', { celebrities });
+  })
+  .catch(err => console.log('Error while detailing celebrity: ', err));
+  console.log('each celebrity details');
+});
+
 module.exports = router;
